@@ -1,46 +1,43 @@
-# Validador de Bandeira de Cart„o de CrÈdito ??
+# Validador de Bandeira de Cart√£o de Cr√©dito ??
 
-## ?? Desafio DIO - GitHub Copilot
+## Desafio DIO - GitHub Copilot
 
-Este projeto foi desenvolvido como parte de um desafio na plataforma **DIO (Digital Innovation One)** para demonstrar o uso de **GitHub Copilot** na criaÁ„o de uma soluÁ„o extensÌvel e robusta.
-
----
-
-## ?? Vis„o Geral
-
-Um validador de cart„o de crÈdito extensÌvel que permite:
-- ? Validar n˙meros de cart„o usando o algoritmo de **Luhn**
-- ? Identificar automaticamente a **bandeira** do cart„o
-- ? Suportar cartıes com **16 dÌgitos** (e outros comprimentos)
-- ? **F·cil extens„o** para adicionar novas bandeiras no futuro
-- ? ValidaÁ„o completa (n˙mero, bandeira e quantidade de dÌgitos)
+Este projeto foi desenvolvido como parte de um desafio na plataforma **DIO (Digital Innovation One)** para demonstrar o uso de **GitHub Copilot** na cria√ß√£o de uma solu√ß√£o extens√≠vel e robusta.
 
 ---
 
-## ?? Funcionalidades Principais
+## Vis√£o Geral
 
-### 1. **ValidaÁ„o de N˙mero (Algoritmo de Luhn)**
-Verifica a integridade matem·tica do n˙mero do cart„o usando o algoritmo de Luhn, o padr„o internacional para validaÁ„o de cartıes.
-
-### 2. **IdentificaÁ„o de Bandeira**
-Detecta automaticamente qual bandeira o cart„o pertence usando regex patterns:
-- **Visa** (13, 16, 19 dÌgitos)
-- **Mastercard** (16 dÌgitos)
-- **American Express** (15 dÌgitos)
-- **Discover** (16 dÌgitos)
-- **Diners Club** (14 dÌgitos)
-- **JCB** (15, 16 dÌgitos)
-- **Elo** (16 dÌgitos) - Bandeira Brasileira
-- **Hipercard** (16 dÌgitos) - Bandeira Brasileira
-- **Aura** (16 dÌgitos) - Bandeira Brasileira
-
-### 3. **Arquitetura ExtensÌvel**
-O sistema foi projetado para facilitar a adiÁ„o de novas bandeiras sem modificar o cÛdigo existente.
+Um validador de cart√£o de cr√©dito extens√≠vel que permite:
+- ? Validar n√∫meros de cart√£o usando o algoritmo de **Luhn**
+- ? Identificar automaticamente a **bandeira** do cart√£o
+- ? Suportar cart√µes com **16 d√≠gitos** (e outros comprimentos)
+- ? **F√°cil extens√£o** para adicionar novas bandeiras no futuro
+- ? Valida√ß√£o completa (n√∫mero, bandeira e quantidade de d√≠gitos)
 
 ---
 
-## ?? Arquitetura
+##  Funcionalidades Principais
 
+### 1. **Valida√ß√£o de N√∫mero (Algoritmo de Luhn)**
+Verifica a integridade matem√°tica do n√∫mero do cart√£o usando o algoritmo de Luhn, o padr√£o internacional para valida√ß√£o de cart√µes.
+
+### 2. **Identifica√ß√£o de Bandeira**
+Detecta automaticamente qual bandeira o cart√£o pertence usando regex patterns:
+- **Visa** (13, 16, 19 d√≠gitos)
+- **Mastercard** (16 d√≠gitos)
+- **American Express** (15 d√≠gitos)
+- **Discover** (16 d√≠gitos)
+- **Diners Club** (14 d√≠gitos)
+- **JCB** (15, 16 d√≠gitos)
+- **Elo** (16 d√≠gitos) - Bandeira Brasileira
+- **Hipercard** (16 d√≠gitos) - Bandeira Brasileira
+- **Aura** (16 d√≠gitos) - Bandeira Brasileira
+
+### 3. **Arquitetura Extens√≠vel**
+O sistema foi projetado para facilitar a adi√ß√£o de novas bandeiras sem modificar o c√≥digo existente.
+
+---
 ### Classes Principais
 
 #### **`CardBrand` (Enum)**
@@ -60,67 +57,67 @@ Define todas as bandeiras suportadas.
 ```csharp
 public class CreditCard
 {
-    public string CardNumber { get; set; }      // N˙mero do cart„o
+    public string CardNumber { get; set; }      // N√∫mero do cart√£o
     public CardBrand Brand { get; set; }        // Bandeira identificada
-    public bool IsValid { get; set; }           // Se o cart„o È v·lido
+    public bool IsValid { get; set; }           // Se o cart√£o √© v√°lido
 }
 ```
-Representa um cart„o de crÈdito com seus dados de validaÁ„o.
+Representa um cart√£o de cr√©dito com seus dados de valida√ß√£o.
 
 #### **`CardBrandPattern`**
 ```csharp
 public class CardBrandPattern
 {
     public CardBrand Brand { get; set; }           // Bandeira
-    public string Pattern { get; set; }            // Regex para identificaÁ„o
-    public string DisplayName { get; set; }        // Nome para exibiÁ„o
-    public int[] AllowedLengths { get; set; }      // Comprimentos v·lidos
+    public string Pattern { get; set; }            // Regex para identifica√ß√£o
+    public string DisplayName { get; set; }        // Nome para exibi√ß√£o
+    public int[] AllowedLengths { get; set; }      // Comprimentos v√°lidos
 }
 ```
 Armazena as regras para cada bandeira.
 
 #### **`CreditCardValidator`** (Classe Principal)
-ContÈm toda a lÛgica de validaÁ„o e identificaÁ„o:
+Cont√©m toda a l√≥gica de valida√ß√£o e identifica√ß√£o:
 
 ```csharp
-// Dicion·rio est·tico com os padrıes de bandeiras
+// Dicion√°rio est√°tico com os padr√µes de bandeiras
 public static readonly Dictionary<CardBrand, CardBrandPattern> BrandPatterns
 ```
 
-**MÈtodos Principais:**
+**M√©todos Principais:**
 
 1. **`ValidateCardNumber(string cardNumber)`**
    - Valida usando o algoritmo de Luhn
-   - Remove espaÁos e hÌfens
+   - Remove espa√ßos e h√≠fens
    - Retorna `true/false`
 
 2. **`IdentifyBrand(string cardNumber)`**
-   - Identifica a bandeira pelo padr„o regex
+   - Identifica a bandeira pelo padr√£o regex
    - Retorna `CardBrand`
 
 3. **`ValidateCard(string cardNumber)`**
-   - ValidaÁ„o completa (n˙mero + bandeira + dÌgitos)
+   - Valida√ß√£o completa (n√∫mero + bandeira + d√≠gitos)
    - Retorna objeto `CreditCard` com todos os dados
 
 4. **`AddCardBrand(...)`** ? **EXTENSIBILIDADE**
    - Permite adicionar novas bandeiras dinamicamente
-   - N„o requer modificaÁ„o do cÛdigo existente
+   - N√£o requer modifica√ß√£o do c√≥digo existente
 
 5. **`GetBrandPattern(CardBrand brand)`**
-   - ObtÈm informaÁıes de uma bandeira
+   - Obt√©m informa√ß√µes de uma bandeira
 
 ---
 
 ## ?? Como Usar
 
-### Validar um Cart„o EspecÌfico
+### Validar um Cart√£o Espec√≠fico
 
 ```csharp
 var card = CreditCardValidator.ValidateCard("4532015112830366");
 
 if (card.IsValid)
 {
-    Console.WriteLine($"Cart„o v·lido: {card.Brand}");
+    Console.WriteLine($"Cart√£o v√°lido: {card.Brand}");
 }
 ```
 
@@ -129,86 +126,86 @@ if (card.IsValid)
 ```csharp
 CreditCardValidator.AddCardBrand(
     brand: CardBrand.Unknown,  // Ou criar novo enum
-    pattern: "^9[0-9]{15}$",   // Regex para identificaÁ„o
+    pattern: "^9[0-9]{15}$",   // Regex para identifica√ß√£o
     displayName: "Minha Bandeira",
     allowedLengths: new[] { 16, 19 }
 );
 ```
 
-### Consultar InformaÁıes de Uma Bandeira
+### Consultar Informa√ß√µes de Uma Bandeira
 
 ```csharp
 var pattern = CreditCardValidator.GetBrandPattern(CardBrand.Visa);
 Console.WriteLine($"Nome: {pattern.DisplayName}");
-Console.WriteLine($"Comprimentos v·lidos: {string.Join(", ", pattern.AllowedLengths)}");
+Console.WriteLine($"Comprimentos v√°lidos: {string.Join(", ", pattern.AllowedLengths)}");
 ```
 
 ---
 
-## ?? Algoritmo de Luhn
+## Algoritmo de Luhn
 
-O algoritmo de Luhn valida n˙meros de cart„o atravÈs de:
+O algoritmo de Luhn valida n√∫meros de cart√£o atrav√©s de:
 
-1. **ComeÁar do ˙ltimo dÌgito** (da direita para esquerda)
-2. **Duplicar dÌgitos em posiÁıes pares**
+1. **Come√ßar do √∫ltimo d√≠gito** (da direita para esquerda)
+2. **Duplicar d√≠gitos em posi√ß√µes pares**
 3. **Se o resultado for > 9, subtrair 9**
-4. **Somar todos os dÌgitos**
-5. **Se a soma for divisÌvel por 10, o n˙mero È v·lido**
+4. **Somar todos os d√≠gitos**
+5. **Se a soma for divis√≠vel por 10, o n√∫mero √© v√°lido**
 
 Exemplo:
 ```
-Cart„o: 4532015112830366
-PosiÁ„o: 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1
-DÌgito:   4  5  3  2  0  1  5  1  1  2  8  3  0  3  6  6
-        ◊ 1  2  1  2  1  2  1  2  1  2  1  2  1  2  1  2
+Cart√£o: 4532015112830366
+Posi√ß√£o: 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1
+D√≠gito:   4  5  3  2  0  1  5  1  1  2  8  3  0  3  6  6
+        √ó 1  2  1  2  1  2  1  2  1  2  1  2  1  2  1  2
 Soma: 4+10+3+4+0+2+5+2+1+4+8+6+0+6+6+12 = 73
 73 % 10 = 3 ? 0 ? Deve ser validado corretamente
 ```
 
 ---
 
-## ?? Padrıes e Extensibilidade
+## Padr√µes e Extensibilidade
 
 ### Design Patterns Utilizados
 
-1. **Dictionary Pattern** - Armazenamento de configuraÁıes em dicion·rio
-2. **Strategy Pattern** - Diferentes estratÈgias de validaÁ„o
-3. **Factory Pattern** - CriaÁ„o de objetos `CreditCard`
-4. **Open/Closed Principle** - Aberto para extens„o, fechado para modificaÁ„o
+1. **Dictionary Pattern** - Armazenamento de configura√ß√µes em dicion√°rio
+2. **Strategy Pattern** - Diferentes estrat√©gias de valida√ß√£o
+3. **Factory Pattern** - Cria√ß√£o de objetos `CreditCard`
+4. **Open/Closed Principle** - Aberto para extens√£o, fechado para modifica√ß√£o
 
-### Por Que … ExtensÌvel?
+### Por Que √â Extens√≠vel?
 
-- ? N„o È necess·rio modificar classes existentes para adicionar bandeiras
-- ? Usa um `Dictionary` p˙blico que pode ser atualizado em runtime
-- ? O mÈtodo `AddCardBrand()` permite registrar novas bandeiras facilmente
-- ? Cada bandeira È uma entrada independente
+- ? N√£o √© necess√°rio modificar classes existentes para adicionar bandeiras
+- ? Usa um `Dictionary` p√∫blico que pode ser atualizado em runtime
+- ? O m√©todo `AddCardBrand()` permite registrar novas bandeiras facilmente
+- ? Cada bandeira √© uma entrada independente
 
 ---
 
-## ?? Testes Inclusos
+## Testes Inclusos
 
-O programa inclui testes autom·ticos com cartıes conhecidos:
+O programa inclui testes autom√°ticos com cart√µes conhecidos:
 
 ```
-Cart„o: 4532015112830366
+Cart√£o: 4532015112830366
 Bandeira: Visa (Visa)
-V·lido: True
-DÌgitos: 16
+V√°lido: True
+D√≠gitos: 16
 
-Cart„o: 378282246310005
+Cart√£o: 378282246310005
 Bandeira: AmericanExpress (American Express)
-V·lido: True
-DÌgitos: 15
+V√°lido: True
+D√≠gitos: 15
 
-Cart„o: 3530111333300000
+Cart√£o: 3530111333300000
 Bandeira: JCB (JCB)
-V·lido: True
-DÌgitos: 16
+V√°lido: True
+D√≠gitos: 16
 ```
 
 ---
 
-## ?? EvidÍncias do Desafio
+## ?? Evid√™ncias do Desafio
 
 ### Prompt Utilizado
 
@@ -216,44 +213,44 @@ DÌgitos: 16
 
 ### Resultado Obtido
 
-![Resultado da ExecuÁ„o](Images/Resultado.png)
+![Resultado da Execu√ß√£o](Images/Resultado.png)
 
 ---
 
-## ?? Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Linguagem**: C# 14.0
 - **Framework**: .NET 10
-- **Padrıes**: Regex, Algorithm Luhn, Design Patterns
+- **Padr√µes**: Regex, Algorithm Luhn, Design Patterns
 - **IDE**: Visual Studio / VS Code + GitHub Copilot
 
 ---
 
-## ?? Aprendizados
+## Aprendizados
 
 Este projeto demonstra:
 
-1. ? Como usar **GitHub Copilot** para geraÁ„o de cÛdigo inteligente
-2. ? Import‚ncia de **Design Patterns** para extensibilidade
-3. ? ValidaÁ„o robusta com **Algoritmos Consagrados** (Luhn)
-4. ? Uso de **Regex** para identificaÁ„o de padrıes
-5. ? **Boas Pr·ticas** de C# (Null-coalescing, LINQ, etc.)
-6. ? CriaÁ„o de **Bibliotecas Reutiliz·veis**
+1. ? Como usar **GitHub Copilot** para gera√ß√£o de c√≥digo inteligente
+2. ? Import√¢ncia de **Design Patterns** para extensibilidade
+3. ? Valida√ß√£o robusta com **Algoritmos Consagrados** (Luhn)
+4. ? Uso de **Regex** para identifica√ß√£o de padr√µes
+5. ? **Boas Pr√°ticas** de C# (Null-coalescing, LINQ, etc.)
+6. ? Cria√ß√£o de **Bibliotecas Reutiliz√°veis**
 
 ---
 
-## ?? SeguranÁa
+## Seguran√ßa
 
-?? **Importante**: Este È um projeto educacional. Para uso em produÁ„o:
+?? **Importante**: Este √© um projeto educacional. Para uso em produ√ß√£o:
 
-- Nunca armazene n˙meros de cart„o em texto simples
-- Use tokenizaÁ„o e criptografia
+- Nunca armazene n√∫meros de cart√£o em texto simples
+- Use tokeniza√ß√£o e criptografia
 - Cumpra as normas PCI DSS
-- Use bibliotecas de terceiros confi·veis para processamento de pagamentos
+- Use bibliotecas de terceiros confi√°veis para processamento de pagamentos
 
 ---
 
-## ?? ReferÍncias
+## Refer√™ncias
 
 - [Algoritmo de Luhn - Wikipedia](https://en.wikipedia.org/wiki/Luhn_algorithm)
 - [Regex Patterns - Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference)
@@ -262,15 +259,15 @@ Este projeto demonstra:
 
 ---
 
-## ?? Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 ValidadorBandeiraCartaoConsole/
-??? Program.cs                 # ImplementaÁ„o completa
+??? Program.cs                 # Implementa√ß√£o completa
 ??? README.md                  # Este arquivo
 ??? Images/
     ??? Prompt.jpeg           # Prompt do desafio
-    ??? Resultado.png         # Resultado da execuÁ„o
+    ??? Resultado.png         # Resultado da execu√ß√£o
 ```
 
 ---
@@ -287,20 +284,25 @@ dotnet run
 
 ---
 
-## ?? Conclus„o
+##  Conclus√£o
 
-Este projeto demonstra como **GitHub Copilot** pode acelerar significativamente o desenvolvimento de soluÁıes robustas e bem arquitetadas, mantendo altos padrıes de qualidade e extensibilidade.
+Este projeto demonstra como **GitHub Copilot** pode acelerar significativamente o desenvolvimento de solu√ß√µes robustas e bem arquitetadas, mantendo altos padr√µes de qualidade e extensibilidade.
 
 O desafio proposto pela **DIO** foi uma excelente oportunidade para explorar as capacidades da IA no desenvolvimento de software.
 
 ---
 
-**Desenvolvido com ?? usando GitHub Copilot na Plataforma DIO**
+**Desenvolvido com .NET usando GitHub Copilot na Plataforma DIO**
 
 ---
 
-## ?? Contato
+##  Contato
 
 Este projeto foi desenvolvido como parte do desafio educacional da **DIO (Digital Innovation One)**.
 
-Para mais informaÁıes sobre a plataforma, visite: [dio.me](https://www.dio.me)
+Para mais informa√ß√µes sobre a plataforma, visite: [dio.me](https://www.dio.me)
+
+‚úçÔ∏è Autor
+
+Desenvolvido por Emmanuel Martins.
+
